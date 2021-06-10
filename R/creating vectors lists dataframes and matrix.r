@@ -1,8 +1,8 @@
 
-# Vektorler
+# Vectors
 x <- c(1,2,3,4)
 
-# Listeler 
+# Lists
 
 l <- list(1,2,3)
 l1 <- list('a' = 1, 'b'= 2)
@@ -12,5 +12,5 @@ l2 <-list(1,2,3,c(12,13,14))
 
 df <- data.frame('a'= c(1,2,3,4) , 'b' = c(1,2,3,4))
 
-#Matris
+#Matrix
 m <- matrix(c(1,2,3,4) , nrow=2 , ncol=2)
