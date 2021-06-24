@@ -25,3 +25,4 @@ abline( lm(chess$Standard_Rating ~ chess$Rapid_rating))
 unique(chess$Title)
 colors
 
+# Dumb None ctrl shift d copies lines to bottom i don't know why i never heard it
