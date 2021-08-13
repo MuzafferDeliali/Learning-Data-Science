@@ -1,6 +1,6 @@
 library(tidyverse)
 library(rstatix)
-
+#### Data Preparation and Outliner Control ####
 heart %>% group_by(cp) %>% 
   summarise(ShapiroResult = mshapiro_test(cbind(chol, thalach))$p.value) # instead of using cbind we can use as.dataframe 
 
@@ -21,4 +21,21 @@ heart %>% group_by(cp) %>%
 
 # Yes mostly they changed but cp=2 one is still not normal but it's only one value so we can use MANOVA
 
+##### Multivariate Homogeneity of Variance Test ####
 
+install.packages("heplots")
+library(heplots)
+
+# now we multivariate version of tests
+#bartlettTests()
+#leveneTests
+
+?bartlettTests
+
+bartlettTests(y = heart[c("chol" , "thalach")], group = heart$cp)
+# H0 is accepted variances are homogeneous
+
+leveneTests(y = heart[c("chol" , "thalach")], group = heart$cp)
+# they return different results but still p is high enough to say the variance is homogeneous
+
+leveneTest(heart$chol , heart$cp) # as we can see it's same result but this one only returned chol
