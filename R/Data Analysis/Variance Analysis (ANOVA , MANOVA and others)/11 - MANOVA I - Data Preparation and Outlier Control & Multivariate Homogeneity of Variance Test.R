@@ -21,7 +21,7 @@ heart %>% group_by(cp) %>%
 
 # Yes mostly they changed but cp=2 one is still not normal but it's only one value so we can use MANOVA
 
-##### Multivariate Homogeneity of Variance Test ####
+#### Multivariate Homogeneity of Variance Test ####
 
 install.packages("heplots")
 library(heplots)
@@ -39,3 +39,19 @@ leveneTests(y = heart[c("chol" , "thalach")], group = heart$cp)
 # they return different results but still p is high enough to say the variance is homogeneous
 
 leveneTest(heart$chol , heart$cp) # as we can see it's same result but this one only returned chol
+
+#### Checking the Homogeneity of Box's M Covariance Matrices ####
+?box_m
+
+#co-variance
+cov(heart$chol , heart$thalach)
+
+#Result is - which it means they're still in co- but reversed
+
+box_m(heart[c("chol" , "thalach")] , group = heart$cp)
+#PS:
+# Data must be data frame 
+# Group must be vector
+
+# H0 : Co-variance matrices are homogeneous
+# Ha : Co-variance matrices are not homogeneous
