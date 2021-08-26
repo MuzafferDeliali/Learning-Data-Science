@@ -55,3 +55,58 @@ box_m(heart[c("chol" , "thalach")] , group = heart$cp)
 
 # H0 : Co-variance matrices are homogeneous
 # Ha : Co-variance matrices are not homogeneous
+
+#### Manova data analytics application ####
+?manova
+# dependence variables should use as data frame that's why we will use cbind
+model <- manova( cbind(chol , thalach) ~ cp , data = heart)
+summary(model)
+
+#H0 isn't accepted
+#Ha is accepted there are difference between chest pains
+
+#lineer model
+model2 <- lm( cbind(chol , thalach) ~ cp , data = heart)
+
+# Disclaimer use right manova
+# We will use Manova which it's in car model
+
+library(car)
+Manova(model2 , test.statistic = "Pillai")
+
+# if we use lm we have use Manova not "manova" this is alternative version
+
+#### Using PostHoc tests after manova ####
+
+# POST HOC Tests
+library(tidyverse)
+
+grouped <- heart %>% gather(key="variable" , value="values" , thalach ,chol) %>%
+          group_by(variable)
+
+grouped
+
+
+#Welch Anova Test
+library(rstatix)
+#convert_as_factor came with rstatix
+
+grouped %>% convert_as_factor(cp) %>%
+        welch_anova_test(values ~ cp)
+#we can do same thing by using anova_test
+
+# thalch is low so h0 declined, ha accepted the difference exist 
+
+
+#Tukey HSD Test
+#if homogeneous variance exist use Tukey HSD if it doesn't exist we will use games howell test
+grouped %>% convert_as_factor(cp) %>%
+        tukey_hsd(values ~ cp)
+#thalach group1 = 0(cp) ones has meanful difference
+
+#Games-Howell Test
+#uses rstatix aswell
+
+#if homogeneous variance doesn't exist we will use games howell test
+grouped %>% convert_as_factor(cp) %>%
+        games_howell_test(values ~ cp)
