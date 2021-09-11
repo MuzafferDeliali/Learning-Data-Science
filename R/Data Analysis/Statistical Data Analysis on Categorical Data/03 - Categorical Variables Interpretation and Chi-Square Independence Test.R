@@ -29,3 +29,13 @@ chisq.test(tbl)
 # n-1 * k-1 (unique rows - 1) * (unique column - 1)
 
 # without the test we can say diagonal vectors high so relationship exist.
+
+####  Fisher's Exact Test ####
+
+library(tidyverse)
+
+df2 <- df1%>% filter (x %in% c('Katýlýyorum' , 'Katýlmýyorum') & 
+                      y %in% c('Katýlýyorum' , 'Katýlmýyorum'))
+                      
+
+df1$x %in% c('Katýlýyorum' , 'Katýlmýyorum')
