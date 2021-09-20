@@ -1,4 +1,4 @@
-# Outliers
+# Outlier Types
 
 # Box plot (non parametric) ####
 library(rstatix)
@@ -26,20 +26,110 @@ max(extreme)
 as <- Nyork %>% filter(Nyork$price < 495)
 View(as)
 
-# How many outliners we have ?
+# How many outlieers we have ?
 nrow(out)
 # How many extreme values we have ?
 length(extreme)
-
-# we have 292 outliners and 1328 of then are extreme outliners
-
+# we have 292 outliers and 1328 of then are extreme outliers
 
 
-# Z-score , T-score and Chi-Square statistics ####
+# Z-score , T-score , Chi-Square , IQR and MAD ####
+
+install.packages("outliers")
+library(outliers)
+
+?scores
+# For Type z and type T comparison 
+# Source : https://www.educba.com/z-score-vs-t-score/
+# Z-score , T-score , Chi-Square , IQR and MAD are not multivariate
 
 
+  # Type Z ----
 
-# Mahalanobis Distence (focused on variance - parametric) ####
-# Cook's Distence (Regression , Parametric) ####
+View(airquality)
+scores(na.omit(airquality$Ozone) , type = "z" , prob = 0.95) 
+
+out2 <- scores(na.omit(airquality$Ozone) , type = "z" , prob = 0.95)
+# Note :prob is two sided 
+
+ids <- which(out2 == TRUE)
+na.omit(airquality$Ozone)[ids]
+# The number greater than 97 are outliers
+
+par(mfrow = c(2,1))
+hist(airquality$Ozone) # Normal histogram
+hist(na.omit(airquality$Ozone)[-ids]) # without outliers
+
+  # Type T ----
+
+# It's pretty much same with type Z
+
+View(airquality)
+scores(na.omit(airquality$Ozone) , type = "t" , prob = 0.95) 
+
+out2 <- scores(na.omit(airquality$Ozone) , type = "t" , prob = 0.95)
+
+ids <- which(out2 == TRUE)
+na.omit(airquality$Ozone)[ids]
+# The number greater than 97 are outliers
+
+par(mfrow = c(2,1))
+hist(airquality$Ozone) # Normal histogram
+hist(na.omit(airquality$Ozone)[-ids]) # without outliers
+
+  # Chi-Square ----
+
+View(airquality)
+scores(na.omit(airquality$Ozone) , type = "chisq" , prob = 0.95) 
+
+out2 <- scores(na.omit(airquality$Ozone) , type = "chisq" , prob = 0.95)
+# Note :prob is two sided 
+
+ids <- which(out2 == TRUE)
+na.omit(airquality$Ozone)[ids]
+# now we have less outliers because chi square is more positive skewed
+
+par(mfrow = c(2,1))
+hist(airquality$Ozone) # Normal histogram
+hist(na.omit(airquality$Ozone)[-ids]) # without outliers
+
+  # IQR ----
+
+View(airquality)
+scores(na.omit(airquality$Ozone) , type = "iqr" , prob = 0.95) 
+
+out2 <- scores(na.omit(airquality$Ozone) , type = "iqr" , prob = 0.95)
+# Note :prob is two sided 
+
+ids <- which(out2 == TRUE)
+na.omit(airquality$Ozone)[ids]
+# The are no outliers
+
+par(mfrow = c(2,1))
+hist(airquality$Ozone) # Normal histogram
+hist(na.omit(airquality$Ozone)[-ids]) # without outliers
+
+  # MAD ----
+
+# Median Absolute Deviation
+
+View(airquality)
+scores(na.omit(airquality$Ozone) , type = "mad" , prob = 0.95) 
+
+out2 <- scores(na.omit(airquality$Ozone) , type = "mad" , prob = 0.95)
+# Note :prob is two sided 
+
+ids <- which(out2 == TRUE)
+na.omit(airquality$Ozone)[ids]
+# Minimum outlier is 77 which that's why we have more outliers than others
+
+par(mfrow = c(2,1))
+hist(airquality$Ozone) # Normal histogram
+hist(na.omit(airquality$Ozone)[-ids]) # without outliers
+# And it's less skewed
+
+
+# Mahalanobis Distance (focused on variance - parametric) ####
+# Cook's Distance (Regression , Parametric) ####
 # DBScan clustering ####
 
