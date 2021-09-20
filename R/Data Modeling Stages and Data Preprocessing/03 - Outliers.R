@@ -130,6 +130,19 @@ hist(na.omit(airquality$Ozone)[-ids]) # without outliers
 
 
 # Mahalanobis Distance (focused on variance - parametric) ####
+library(ggplot2)
+library(car)
+
+View(airquality)
+
+fig <- ggplot(airquality , aes(x = Ozone , y = Temp)) +
+      geom_point(size = 2) +
+      xlab("Ozone Values") +
+      ylab("Temp")
+
+fig
+
+
 # Cook's Distance (Regression , Parametric) ####
 # DBScan clustering ####
 
