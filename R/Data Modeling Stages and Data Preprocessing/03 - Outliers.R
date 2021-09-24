@@ -142,6 +142,40 @@ fig <- ggplot(airquality , aes(x = Ozone , y = Temp)) +
 
 fig
 
+X <-na.omit(airquality[c("Ozone" , "Temp")])
+View(X)
+
+air.center <- colMeans(X)
+air.center
+
+air.cov <- cov(X)
+cov(X)
+# if we change 0.95 we can make larger or smaller ellipses
+rad <- sqrt(qchisq(0.95 , df = 2)) # we have 2 columns so df will be 2
+
+elli <- ellipse(center = air.center , shape = air.cov , rad = rad ,
+        segments = 100 , draw = FALSE)
+
+colnames(elli) <- colnames(X)
+elli
+elli <- as.data.frame(elli)
+
+fig <- fig +geom_polygon(data = elli , color = "Orange" , fill = "Orange" ,
+                  alpha = 0.3 ) +
+    geom_point(aes(x = air.center[1] , y = air.center[2]) ,
+               size = 4 , color = "blue")
+fig
+  # The dots who outside of ellipse are outliers
+
+dist <- mahalanobis(X , center = air.center , cov = air.cov)
+dist
+
+cutoff <- qchisq(p = 0.95 , df = 2) # we didn't take square because distences are already squared
+
+ids <- which(dist > cutoff)
+X[ids, ] # values of outliers 
+
+
 
 # Cook's Distance (Regression , Parametric) ####
 # DBScan clustering ####
