@@ -26,7 +26,47 @@ length(nas)
 length(df$Acedamic.percentage.in.Operating.Systems)
 
 #Substitution ####
-#Hot Deck Imputation ####
-#Cold Deck Imputation ####
+#Hot Deck Imputation (Random inputs)####
+
+set.seed(155)
+rnorm(2)
+
+rnorm(2)
+
+set.seed(155)#if we give same seed we will get same values
+rnorm(2)
+
+index <- which(is.na(df$Acedamic.percentage.in.Operating.Systems))
+length(index)
+
+random <- sample(df$Acedamic.percentage.in.Operating.Systems[-index], size = 1) #taking sample without na 
+random
+
+x <- df$Acedamic.percentage.in.Operating.Systems
+x[index] <- random #na values are replaced with sample
+which(is.na(x)) # for checking
+
+# Original 
+mean(df$Acedamic.percentage.in.Operating.Systems, na.rm = T)
+
+# After Hot deck imputation
+mean(x)
+
+# Taking more than one sample
+random_many <- sample(df$Acedamic.percentage.in.Operating.Systems[-index] ,
+                      size = length(index))
+
+random_many
+y <- df$Acedamic.percentage.in.Operating.Systems
+y[index] <- random_many
+
+# Comparetion between them
+mean(df$Acedamic.percentage.in.Operating.Systems, na.rm = T) # original
+mean(x) # one random sample
+mean(y) # all random sample
+
+# so if we will use Hot deck imputation , it's better to take sample size as na length
+
+#Cold Deck Imputation (closest inputs)####
 #Regression Imputation ####
 #Stochastic Regression Imputation
