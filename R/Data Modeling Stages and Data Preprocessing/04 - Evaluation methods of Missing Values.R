@@ -68,5 +68,30 @@ mean(y) # all random sample
 # so if we will use Hot deck imputation , it's better to take sample size as na length
 
 #Cold Deck Imputation (closest inputs)####
+
+df <- student_placement_data_with_NA
+index <- which(is.na(df$percentage.in.Algorithms))
+length(index)
+
+index[1]
+names(df)
+
+#certification
+#workshop
+
+df[c("certifications" , "workshops")][index[1] , ]
+
+subs <-subset(df ,
+       select = c("percentage.in.Algorithms" , "certifications" , "workshops") ,
+       subset = ( certifications == "python" & workshops == "data science" ) )
+
+View(subs)
+
+avg <- mean(subs$percentage.in.Algorithms , na.rm = T)
+
+df$percentage.in.Algorithms[index[1]] <- avg
+df$percentage.in.Algorithms[31]
+
+
 #Regression Imputation ####
 #Stochastic Regression Imputation
