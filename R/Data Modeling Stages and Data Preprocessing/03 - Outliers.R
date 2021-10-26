@@ -94,6 +94,7 @@ hist(airquality$Ozone) # Normal histogram
 hist(na.omit(airquality$Ozone)[-ids]) # without outliers
 
   # IQR ----
+# Interquartile Range
 
 View(airquality)
 scores(na.omit(airquality$Ozone) , type = "iqr" , prob = 0.95) 
@@ -110,7 +111,6 @@ hist(airquality$Ozone) # Normal histogram
 hist(na.omit(airquality$Ozone)[-ids]) # without outliers
 
   # MAD ----
-
 # Median Absolute Deviation
 
 View(airquality)
