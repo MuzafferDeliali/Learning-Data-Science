@@ -81,4 +81,24 @@ summary(model_sqrt)
 model_sqrt_ozone <- lm(sqrt(Ozone) ~ log(Temp) , data = air_new)
 summary(model_sqrt_ozone)
 
+# Guessing via model
 
+model_log <- lm(log(Ozone) ~ Temp , data = airquality)
+summary(model_log)
+predict(model2 , data.frame(Temp = c(74)))
+
+# via log model
+predict <- predict(model_log , data.frame(Temp = c(74))) #predicted values are lowered
+
+#exponential
+exp(predict)
+
+# independent log model
+model_log_ba <- lm(Ozone ~log(Temp), data = airquality)
+predict(model_log_ba , data.frame(Temp = c(74)))
+
+# we don't need to do the inverse transform when predicting if it transforms over the arguments 
+# but if we do transformation on dependent variables then we need 
+# But we need to apply an inverse transform again, if the value we get is from the predict result. 
+
+predict(model_log_ba , data.frame(Temp = c(74, 56, 45,78)))
