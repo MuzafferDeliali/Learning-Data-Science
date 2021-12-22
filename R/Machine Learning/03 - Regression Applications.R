@@ -74,3 +74,24 @@ AIC(model2)
 BIC(model2)
 
 summary(model1) # Estimated value per sqft_living 280
+# Regression Application 4 - Valuation on Data Set ####
+
+# Prediction 
+
+model1Pred <- predict(model1, testSet)
+model2Pred <- predict(model2, testSet)
+
+model1PredData <- data.frame("actuals" = testSet$price , "predictions" = model1Pred)
+model2PredData <- data.frame("actuals" = testSet$price , "predictions" = model2Pred)
+
+View(model1PredData)
+View(model2PredData)
+
+model1_err <- model1PredData$actuals - model1PredData$predictions
+model2_err <- model2PredData$actuals - model2PredData$predictions
+
+mse1 <- sum(model1_err^2) / nrow(model1PredData)
+mse2 <- sum(model2_err^2) / nrow(model2PredData)
+
+sqrt(mse1);sqrt(mse2) # model1 has lower error value
+# which it was the one who outliers are not removed
