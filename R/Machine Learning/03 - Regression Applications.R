@@ -59,3 +59,18 @@ cor(trainSetRemovedOutliers) # now we have less correlation
 library(mice)
 md.pattern(trainSet)
 # If we were have missing values at beginning we would use imputation of missing values
+
+# Regression Application 3 - Modelling and Estimation ####
+
+model1 <- lm(price ~sqft_living , data = trainSet)
+model2 <- lm(price ~sqft_living , data = trainSetRemovedOutliers)
+
+summary(model1)
+summary(model2)
+
+AIC(model1)
+BIC(model1)
+AIC(model2)
+BIC(model2)
+
+summary(model1) # Estimated value per sqft_living 280
