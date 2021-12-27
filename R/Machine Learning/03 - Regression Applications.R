@@ -1,6 +1,6 @@
 ### Regression Application ###
 
-# Regression Application 1 - Separation of Train and Test ####
+## Regression Application 1 - Separation of Train and Test ####
 
 model_data <- house[c("price" , "sqft_living")]
 
@@ -15,7 +15,7 @@ testSet <- model_data[-sampleIndex , ]
 nrow(trainSet)
 nrow(testSet)
 
-# Regression Application 2 - Examination of trainSet and Checking Outliers ####
+## Regression Application 2 - Examination of trainSet and Checking Outliers ####
 cor(trainSet) # There is a positive correlation and it's 0.69
 
 hist(trainSet$price)
@@ -60,7 +60,7 @@ library(mice)
 md.pattern(trainSet)
 # If we were have missing values at beginning we would use imputation of missing values
 
-# Regression Application 3 - Modelling and Estimation ####
+## Regression Application 3 - Modelling and Estimation ####
 
 model1 <- lm(price ~sqft_living , data = trainSet)
 model2 <- lm(price ~sqft_living , data = trainSetRemovedOutliers)
@@ -74,7 +74,7 @@ AIC(model2)
 BIC(model2)
 
 summary(model1) # Estimated value per sqft_living 280
-# Regression Application 4 - Valuation on Data Set ####
+## Regression Application 4 - Valuation on Data Set ####
 
 # Prediction 
 
@@ -95,3 +95,22 @@ mse2 <- sum(model2_err^2) / nrow(model2PredData)
 
 sqrt(mse1);sqrt(mse2) # model1 has lower error value
 # which it was the one who outliers are not removed
+
+## Regression Application 5 - R2, MSE and MAE ####
+
+# We use these metrics to calculate errors so we can pick whom fit us
+
+install.packages("caret")
+library(caret)
+
+#R2 (R Squared)
+R2(model1PredData$predictions , model1PredData$actuals)
+R2(model2PredData$predictions , model2PredData$actuals)
+
+#Root Mean Squared Error
+RMSE(model1PredData$predictions , model1PredData$actuals)
+RMSE(model2PredData$predictions , model2PredData$actuals)
+
+#Mean Absolute Error
+MAE(model1PredData$predictions , model1PredData$actuals)
+MAE(model2PredData$predictions , model2PredData$actuals)
