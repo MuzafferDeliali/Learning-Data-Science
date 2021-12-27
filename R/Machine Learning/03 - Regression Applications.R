@@ -140,3 +140,35 @@ model2MAPE <- mean(abs(model2PredData$actuals - model2PredData$predictions) /
 
 model1MAPE;model2MAPE # second one has less error value which it means last one is more accurate
 # model 2 has %68 accurate
+
+## Regression Application 8 - Choosing Model ####
+
+# Most of time second model has better result so we will choose model 2
+# But the difference isn't much, we can choose model 1 tho 
+# Depending on the results we can try other samples and pick other model
+
+## Regression Application 9 - k-Fold Cross Validation #### 
+
+
+library(caret)
+train.control <- trainControl(method = "cv" , number = 10 , verboseIter = TRUE) # CV stands for cross validation
+
+model1CV <- train(price ~ sqft_living , data = trainSet , method = "lm" ,
+                  trControl = train.control)
+
+model2CV <- train(price ~ sqft_living , data = trainSetRemovedOutliers , method = "lm" ,
+                  trControl = train.control)
+
+model1CV
+model2CV
+# model2CV has lower RMSE because it's non-outlier version
+
+model1CV_Pred <- predict(model1CV , testSet)
+model2CV_Pred <- predict(model2CV , testSet)
+
+# It's same as Regression Application 5
+caret::R2(model1CV_Pred , testSet$price)
+caret::R2(model2CV_Pred , testSet$price)
+
+caret::RMSE(model1CV_Pred , testSet$price)
+caret::RMSE(model2CV_Pred , testSet$price)
