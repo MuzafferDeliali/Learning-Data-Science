@@ -114,3 +114,15 @@ RMSE(model2PredData$predictions , model2PredData$actuals)
 #Mean Absolute Error
 MAE(model1PredData$predictions , model1PredData$actuals)
 MAE(model2PredData$predictions , model2PredData$actuals)
+
+## Regression Application 6 - Min - Max Accuracy ####
+
+# Min - Max Accuracy
+
+model1MinMaxAccur <- mean(apply(model1PredData , 1 , min) / apply(model1PredData , 1 , max)) # Model 1 Accuracy Rate 
+model1MinMaxAccur
+
+model2MinMaxAccur <- mean(apply(model2PredData , 1 , min) / apply(model2PredData , 1 , max)) # Model 2 Accuracy Rate 
+model2MinMaxAccur
+
+# So, according to this they're not much different than each other but model 2 is more accurate
