@@ -126,3 +126,17 @@ model2MinMaxAccur <- mean(apply(model2PredData , 1 , min) / apply(model2PredData
 model2MinMaxAccur
 
 # So, according to this they're not much different than each other but model 2 is more accurate
+
+## Regression Application 7 - Mean Absolute Percentage Error (MAPE) ####
+
+# Mean Absolute Percentage Error (MAPE)
+# It's similar to the MAE but on MAPE the results are percentage
+
+model1MAPE <- mean(abs(model1PredData$actuals - model1PredData$predictions) /
+                     model1PredData$actuals)
+
+model2MAPE <- mean(abs(model2PredData$actuals - model2PredData$predictions) /
+                     model2PredData$actuals)
+
+model1MAPE;model2MAPE # second one has less error value which it means last one is more accurate
+# model 2 has %68 accurate
