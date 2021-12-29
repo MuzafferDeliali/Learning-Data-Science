@@ -58,8 +58,32 @@ summary(model1)
 
 # seems like pressure doesn't effect , we can remove it
 
-model2 <- lm(Humidity9am ~ MinTemp + MaxTemp + Temp9am + 
+  model2 <- lm(Humidity9am ~ MinTemp + MaxTemp + Temp9am + 
                Rainfall + WindSpeed9am , data  = trainSet)
 
 model2
 summary(model2)
+
+# AIC
+AIC(model1 , k = 8) # K = coefficient of variance 
+AIC(model2 , k = 7)
+
+# BIC
+BIC(model1)
+BIC(model2)
+
+# Residual plots
+plot(model2)
+
+testSet2 <- testSet[-5]
+predictions <- predict(model2 , testSet2)
+predictions
+
+# Difference between predictions and real values
+library(caret)
+
+R2(predictions , testSet2$Humidity9am)
+RMSE(predictions , testSet2$Humidity9am)
+MAE(predictions , testSet2$Humidity9am)
+
+summary(testSet2$Humidity9am)
