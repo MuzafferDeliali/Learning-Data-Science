@@ -87,3 +87,23 @@ RMSE(predictions , testSet2$Humidity9am)
 MAE(predictions , testSet2$Humidity9am)
 
 summary(testSet2$Humidity9am)
+
+## Multiple Linear Regression 4 - Cook's Distance Outlier Detection ####
+
+diste <- cooks.distance(model2)
+diste
+
+olcut1 <- mean(diste)*3
+olcut2 <- 4 / length(diste)
+
+olcut1Index <- which(diste > olcut1)
+olcut2Index <- which(diste > olcut2)
+
+# How many outliers exist
+length(olcut1Index)
+length(olcut2Index)
+
+plot(1:length(diste) , diste , type = "p" , ylim = range(diste)*c(1,0.7))
+abline( h = olcut1 , col = "red")
+
+trainSetRemovedOut <- trainSet[-olcut1Index , ]
