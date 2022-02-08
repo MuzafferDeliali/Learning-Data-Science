@@ -47,7 +47,9 @@ RandomArray = np.random.randint(0,100,30)
 # Reshape
 RandomArray.reshape(5,5) # size doesnt fit we can't resize it to 5,5
 
-RandomArray.reshape(5,6)
+RandomArray.reshape(5,6) # doesnt update old one
+ReShaped = RandomArray.reshape(5,6) 
+ReShaped.shape # how to check shape
 
 # Min Max values
 RandomArray.max() #  max value 
