@@ -48,3 +48,31 @@ New_df #original one is still same
 New_df[booleanDF] # this will only show True values rest of it will be replaced with NaN
 
 New_df[New_df["hour"] > 0]
+
+# index name change (for permenant replacments you have to use "inplace")
+NewIndexList = ["Muzo" , "Hakk" , "Ahme"]
+New_df["New index"] = NewIndexList #adds new column
+New_df.set_index("New index")#set index 
+
+New_df.set_index("New index" , inplace = True)
+New_df.loc["Muzo"]
+
+F_Index = ["Simpsons" , "Simpsons" , "Simpsons" , "South Park" , "South Park" , "South Park"]
+I_Index = ["Homer" , "Bart" , "Marge" , "Cartman" , "Kenny" , "Kyle"]
+
+Combined_Index = list(zip(F_Index , I_Index))
+Combined_Index
+
+Combined_Index = pd.MultiIndex.from_tuples(Combined_Index)
+Cartoon_List = [[40,"A"] , [10,"B"] , [30,"C"] , [9,"D"] , [10,"E"] , [11,"F"]]
+Cartoon_Numpy = np.array(Cartoon_List)
+
+Cartoon_DF = pd.DataFrame(Cartoon_Numpy, index= Combined_Index , columns= ["Number" , "Letter"])
+
+Cartoon_DF
+
+Cartoon_DF.loc["South Park"]
+Cartoon_DF.loc["South Park"].loc["Kenny"]
+
+Cartoon_DF.index.names = ["Cartoon" , "Character Name"]
+Cartoon_DF
