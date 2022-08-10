@@ -107,3 +107,29 @@ plot(1:length(diste) , diste , type = "p" , ylim = range(diste)*c(1,0.7))
 abline( h = olcut1 , col = "red")
 
 trainSetRemovedOut <- trainSet[-olcut1Index , ]
+
+## Multiple Linear Regression 5 - Model Comparison ####
+
+model3 <- lm(Humidity9am ~ MinTemp + MaxTemp + Temp9am + 
+               Rainfall + WindSpeed9am , data  = trainSetRemovedOut)
+summary(model3)
+summary(model2)
+
+AIC(model3 , k = 7)
+BIC(model3)
+AIC(model2 , k = 7)
+BIC(model2)
+
+# looks good at train set and now we will check at test set
+
+## New Model
+predictions3 <- predict(model3, testSet2)
+R2(predictions3 , testSet2$Humidity9am)
+RMSE(predictions3 , testSet2$Humidity9am)
+MAE(predictions3 , testSet2$Humidity9am)
+
+## Old Model
+predictions <- predict(model2, testSet2)
+R2(predictions , testSet2$Humidity9am)
+RMSE(predictions , testSet2$Humidity9am)
+MAE(predictions , testSet2$Humidity9am)
