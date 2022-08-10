@@ -120,8 +120,6 @@ BIC(model3)
 AIC(model2 , k = 7)
 BIC(model2)
 
-# looks good at train set and now we will check at test set
-
 ## New Model
 predictions3 <- predict(model3, testSet2)
 R2(predictions3 , testSet2$Humidity9am)
@@ -133,3 +131,49 @@ predictions <- predict(model2, testSet2)
 R2(predictions , testSet2$Humidity9am)
 RMSE(predictions , testSet2$Humidity9am)
 MAE(predictions , testSet2$Humidity9am)
+
+## Multiple Linear Regression 6 - Detecting Multicollinearity with VIF ####
+## Variance Inflation Factors
+
+library(car)
+?vif
+
+vif(model3)
+modelVif1 <- lm(Humidity9am ~ MinTemp + MaxTemp +
+                  Rainfall + WindSpeed9am , data  = trainSetRemovedOut)
+vif(modelVif1)
+
+summary(modelVif1)
+summary(model3)
+
+# let's check it without min temperature and max temperature
+# without MinTemp
+modelVif2 <-  lm(Humidity9am ~ MaxTemp + Temp9am +
+                   Rainfall + WindSpeed9am , data  = trainSetRemovedOut)
+# without MaxTemp
+modelVif3 <-   lm(Humidity9am ~ MinTemp + Temp9am +
+                    Rainfall + WindSpeed9am , data  = trainSetRemovedOut)
+
+vif(modelVif3)
+summary(modelVif3)
+
+# Model comparison with test set ##
+# Vif3
+predictionsVif3 <- predict(modelVif3 , testSet2)
+R2(predictionsVif3 , testSet2$Humidity9am)
+RMSE(predictionsVif3 , testSet2$Humidity9am)
+MAE(predictionsVif3 , testSet2$Humidity9am)
+
+# Vif2
+predictionsVif2 <- predict(modelVif2 , testSet2)
+R2(predictionsVif2 , testSet2$Humidity9am)
+RMSE(predictionsVif2 , testSet2$Humidity9am)
+MAE(predictionsVif2 , testSet2$Humidity9am)
+
+# Vif1
+predictionsVif1 <- predict(modelVif1 , testSet2)
+R2(predictionsVif1 , testSet2$Humidity9am)
+RMSE(predictionsVif1 , testSet2$Humidity9am)
+MAE(predictionsVif1 , testSet2$Humidity9am)
+
+# vif2 returns best results #
