@@ -177,3 +177,19 @@ RMSE(predictionsVif1 , testSet2$Humidity9am)
 MAE(predictionsVif1 , testSet2$Humidity9am)
 
 # vif2 returns best results #
+
+## Multiple Linear Regression 7 - Dummy variables and One hot encoding ####
+
+# Dummy Variable ##
+#  A dummy variable is either 1 or 0 and 1 can be represented as either True or False
+# and 0 can be represented as False or True depending upon the user. This variable is used to 
+# categorize the characteristic of an observation. For example, a person is either male or female, 
+# is either good or bad, etc. Further, new columns will be made accordingly which will specify
+# if the person is male or not as the binary value of gender_m and if the person is female or not 
+# as the binary value of gender_f. 
+
+# One hot encoding ##
+# In this technique, the categorical parameters will prepare separate columns for both Male and Female labels.
+# So, wherever there is Male, the value will be 1 in Male column and 0 in Female column, and vice-versa. 
+# Consider the data where fruits and their corresponding categorical values and prices are given.
+
