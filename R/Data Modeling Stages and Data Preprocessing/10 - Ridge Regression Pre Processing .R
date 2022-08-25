@@ -20,6 +20,15 @@ modelDataScaled <- predict(pre_scaled , modelData)
 class(modelDataScaled$purpose_cat)
 
 View(modelDataScaled)
-
 modelDataScaled$purpose_cat <- as.factor(modelDataScaled$purpose_cat)
+
 view(modelDataScaled)
+
+# shortcut 
+
+# we can remove 20 and 23th line, if we use mutate at while creating modeldata
+## 
+modelData <- loan %>% 
+  mutate(purose_cat = as.factor(purpose_cat)) %>%
+  select(loan_amount , term , income_category , purpose_cat ,
+         grade , interest_payments , loan_condition , annual_inc , emp_length_int)
