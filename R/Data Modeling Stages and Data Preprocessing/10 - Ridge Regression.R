@@ -82,3 +82,18 @@ modelRidgeCV$lambda.min
 
 modelRidgeCV
 ncol(trainSet_x)
+
+## Model prediction estimate ####
+fitGl <- glmnet(trainSet_x , trainSet_y  , alpha = 0 , lambda = 0.01)
+predictionsRidge <- predict(fitGl , testSet_x )
+
+library(caret)
+
+R2(predictionsRidge , testSet_y)
+MAE(predictionsRidge , testSet_y)
+RMSE(predictionsRidge , testSet_y)
+
+dfPred  <- data.frame(predicitons = predictionsRidge , actuals = testSet_y)
+
+minMaxAc <- mean(apply(dfPred , 1 , min) / apply(dfPred , 1 , max)) 
+minMaxAc
