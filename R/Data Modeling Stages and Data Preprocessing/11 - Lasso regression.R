@@ -41,3 +41,37 @@ legend("right" , lwd = 1 , col = 1:nrow(trainDataX) , legend = colnames(trainDat
 ## Assigning a Cross Validation Lambda Value ####
 
 fitGLCV <- cv.glmnet(trainDataX , trainDataY , alpha = 1 , lambda = lambdas)
+# Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per fold # 
+# this happens because we're trying 24 to fold 10 
+nrow(trainDataX)
+
+## correct way
+fitGLCV <- cv.glmnet(trainDataX , trainDataY , alpha = 1 , lambda = lambdas , nfolds = 3)
+plot(fitGLCV)
+
+best_lambda <- fitGLCV$lambda.min
+
+# Model performance
+
+fitGlLasso <- glmnet(trainDataX , trainDataY , alpha = 1 , lambda = best_lambda)
+fitGlLasso$beta
+fitGlLasso
+
+#let's make predictions
+predictions <- predict(fitGlLasso , testDataX)
+
+# and now let's compare it with the real ones
+R2(predictions , testDataY) # deviance values are closer to each other which it's good
+MAE(predictions , testDataY)
+RMSE(predictions , testDataY)
+
+
+# OLS model
+fitGlOLS <- glmnet(trainDataX , trainDataY , alpha = 1 , lambda = 0)
+fitGlOLS$beta
+
+predictionsOLS <- predict(fitGlOLS , testDataX)
+
+R2(predictionsOLS , testDataY)
+MAE(predictionsOLS , testDataY)
+RMSE(predictionsOLS , testDataY)
