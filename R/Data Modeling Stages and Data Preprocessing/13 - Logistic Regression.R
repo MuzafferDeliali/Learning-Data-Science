@@ -37,3 +37,10 @@ testNotPlaced <- dataNotPlaced[-dataNotPlacedIndex , ]
 testSet <- rbind(testPlaced , testNotPlaced)
 table(testSet$status)
 
+?glm
+
+# modelLogit <-glm(status ~ . , data = trainSet, family = binominal(link = "logit"))
+modelLogit <-glm(status ~ . , data = trainSet, family = "binominal")
+
+modelLogit
+summary(modelLogit)
