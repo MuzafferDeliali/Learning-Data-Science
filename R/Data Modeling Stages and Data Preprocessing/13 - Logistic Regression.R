@@ -51,3 +51,41 @@ anova(modelLogit)
 summary(modelLogit)
 
 varImp(modelLogit)
+
+# Testing prediction performances  ####
+install.packages("InformationValue")
+library(InformationValue)
+
+predictions1 <- predict(modelLogit , testSet , type = "response")
+# predictions2 <- plogis(predict(modelLogit , testSet)) does the same
+
+cmMatrix <- InformationValue::confusionMatrix(testSet$status , predictedScores = predictions1)
+
+accur <- (cmMatrix[1,1] + cmMatrix[2,2]) / sum(cmMatrix)
+accur
+
+# failure rate
+errorRate <- (cmMatrix[1,2] + cmMatrix[2,1]) / sum(cmMatrix)
+errorRate
+
+# optimal cutoff value
+summary(predictions1)
+
+InformationValue::optimalCutoff(testSet$status , predictedScores = predictions1)
+cmMatrix
+
+summary(predictions1)
+
+optCutoff <- InformationValue::optimalCutoff(testSet$status , predictedScores = predictions1)
+optCutoff
+
+cmOpt <- InformationValue::confusionMatrix(testSet$status , 
+                                           predictedScores = predictions1 ,
+                                           threshold = optCutoff  )
+cmOpt
+accurOpt <- (cmOpt[1,1] + cmOpt[2,2]) /sum(cmOpt)
+accurOpt
+accur
+
+cm
+cmOpt
