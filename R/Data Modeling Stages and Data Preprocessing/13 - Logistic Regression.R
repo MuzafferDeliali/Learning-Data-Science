@@ -1,9 +1,10 @@
 ## Logistic Regression
-# placement <- read.csv(Placement_Data_Full_Class.csv")
+placement <- read.csv("C:/Users/Muzaffer/Desktop/Veri_Bilimi/SourceForUdemy/DataSets/Placement_Data_Full_Class.csv", header=T, stringsAsFactors=T)
 
 library(caret)
 library(glmnet)
 library(tidyverse)
+
 
 placement["sl_no"] <- NULL
 placement["salary"] <- NULL
@@ -39,8 +40,14 @@ table(testSet$status)
 
 ?glm
 
-# modelLogit <-glm(status ~ . , data = trainSet, family = binominal(link = "logit"))
-modelLogit <-glm(status ~ . , data = trainSet, family = "binominal")
+#modelLogit <-glm(status ~ . , data = trainSet, family = binominal(link = "logit"))
+modelLogit <- glm(status ~ . , data = trainSet, family = "binomial")
 
 modelLogit
 summary(modelLogit)
+
+## ANOVA variable deviance value ####
+anova(modelLogit)
+summary(modelLogit)
+
+varImp(modelLogit)
