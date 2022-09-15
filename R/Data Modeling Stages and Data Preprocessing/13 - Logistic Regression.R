@@ -89,3 +89,30 @@ accur
 
 cm
 cmOpt
+
+## Precision and Recall calculations
+
+
+cmOpt_1 <- InformationValue::confusionMatrix(testSet$status , 
+                                             predictedScores = predictions1 ,
+                                             threshold = optCutoff  )
+cmOpt_1
+
+names(cmOpt_1) <- c("Not Placed (Negative)" , "Placed (Positive)")
+rownames(cmOpt_1) <- c("Not Placed (Negative)" , "Placed (Positive)")
+
+cmOpt_1
+
+precision_1 <- cmOpt_1[2,2] / (cmOpt_1[2,1] + cmOpt_1[2,2])
+recall_1 <- cmOpt_1[2,2] / (cmOpt_1[1,2] + cmOpt_1[2,2])
+
+cmOpt_2 <- InformationValue::confusionMatrix(testSet$status , 
+                                             predictedScores = predictions1 ,
+                                             threshold = optCutoff  )
+
+names(cmOpt_2) <- c("Not Placed (Positive)" , "Placed (Negative)")
+rownames(cmOpt_2) <- c("Not Placed (Positive)" , "Placed (Negative)")
+cmOpt_2
+precision_2 <- cmOpt_2[1,1] / (cmOpt_2[1,2] + cmOpt_2[1,1])
+recall_2 <- cmOpt_2[1,1] / (cmOpt_2[2,1] + cmOpt_2[1,1])
+precision_2;recall_2
