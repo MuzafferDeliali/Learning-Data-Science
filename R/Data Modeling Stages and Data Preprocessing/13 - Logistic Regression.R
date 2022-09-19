@@ -116,3 +116,40 @@ cmOpt_2
 precision_2 <- cmOpt_2[1,1] / (cmOpt_2[1,2] + cmOpt_2[1,1])
 recall_2 <- cmOpt_2[1,1] / (cmOpt_2[2,1] + cmOpt_2[1,1])
 precision_2;recall_2
+
+# Sensitivity ve Specificity
+
+
+# Positive class Placed
+cmOpt_1
+
+sensitivity_1  <- cmOpt_1[2,2] / (cmOpt_1[1,2] + cmOpt_1[2,2])
+sensitivity_1
+
+specifitcity_1 <- cmOpt_1[1,1] / (cmOpt_1[2,1] + cmOpt_1[1,1])
+specifitcity_1
+
+
+## F1 Score 
+
+# Positive calss Palced
+cmOpt_1
+f1_1 <- 2 * ( (precision_1 * recall_1) / (precision_1 + recall_1) )
+f1_1
+
+# Positive class Not Placed
+cmOpt_2
+f1_2 <- 2 * ( (precision_2 * recall_2) / (precision_2 + recall_2) )
+f1_2
+
+
+### ROC Curve and AUC (Area Under Curve)
+
+#  install.packages("pROC")
+
+library(pROC)
+
+?roc
+rocModel_1 <- roc( testSet$status ~ predictions1)
+# Control = negative class
+# Case  = positive class
