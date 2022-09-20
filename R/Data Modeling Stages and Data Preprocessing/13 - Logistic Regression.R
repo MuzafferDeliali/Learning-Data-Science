@@ -145,11 +145,43 @@ f1_2
 
 ### ROC Curve and AUC (Area Under Curve)
 
-#  install.packages("pROC")
-
+install.packages("pROC")
 library(pROC)
 
 ?roc
 rocModel_1 <- roc( testSet$status ~ predictions1)
 # Control = negative class
 # Case  = positive class
+
+plot(rocModel_1)
+rocModel_1
+
+# Confusion matrix via caret package
+?caret::confusionMatrix
+
+optCutoff
+predictions1
+table(testSet$status)
+
+predictedClass <- ifelse(predictions1 > optCutoff , "Placed" , "Not Placed")
+predictedClass
+
+caret::confusionMatrix(predictedClass , reference = testSet$status) #must be factors
+predictedClass <- as.factor(predictedClass) # now it's a factor
+
+## Default positive class is first class at matrix. and it's Not Placed
+caret::confusionMatrix(predictedClass , reference = testSet$status)
+
+## Positive class  Placed
+caret::confusionMatrix(predictedClass , reference = testSet$status , positive = "Placed")
+
+
+## Recall , Precision and F1 metrics
+caret::confusionMatrix(predictedClass , reference = testSet$status , 
+                       positive = "Placed" , mode = "prec_recall")
+
+##  Conf. mat. assignment and accessing the values
+cmOpt_1_caret <- caret::confusionMatrix(predictedClass , reference = testSet$status , 
+                                        positive = "Placed" , mode = "prec_recall")
+
+cmOpt_1_caret$byClass[1]
